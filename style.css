@@ -1,102 +1,224 @@
 
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Customer Database Admin</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
 
-<div class="sidebar">
-  <h2>CRM ADMIN</h2>
-  <p>Customer Management</p>
-  <nav>
-    <a href="#dashboard">Dashboard</a>
-    <a href="#customers">Data Customer</a>
-    <a href="#input">Tambah Customer</a>
-  </nav>
-</div>
+body {
+  background: #f1f5f9;
+  color: #1e293b;
+}
 
-<main>
-  <header>
-    <div>
-      <h1>Dashboard Customer</h1>
-      <p>Kelola database customer Anda</p>
-    </div>
-    <span class="admin">ADMIN</span>
-  </header>
+.sidebar {
+  position: fixed;
+  width: 230px;
+  height: 100vh;
+  background: #172554;
+  color: white;
+  padding: 25px 18px;
+}
 
-  <section class="stats" id="dashboard">
-    <div class="stat">
-      <p>Total Customer</p>
-      <h2 id="total">0</h2>
-    </div>
-    <div class="stat">
-      <p>Belum Dihubungi</p>
-      <h2 id="pending">0</h2>
-    </div>
-    <div class="stat">
-      <p>Follow Up</p>
-      <h2 id="followup">0</h2>
-    </div>
-    <div class="stat">
-      <p>Selesai</p>
-      <h2 id="done">0</h2>
-    </div>
-  </section>
+.sidebar h2 {
+  margin-bottom: 8px;
+}
 
-  <section class="panel" id="input">
-    <h2>Tambah Customer</h2>
+.sidebar p {
+  color: #94a3b8;
+  font-size: 12px;
+  margin-bottom: 35px;
+}
 
-    <form id="customerForm">
-      <input id="name" placeholder="Nama Customer" required>
-      <input id="phone" placeholder="Nomor WhatsApp" required>
-      <input id="address" placeholder="Alamat Customer">
+.sidebar nav a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  padding: 14px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+}
 
-      <select id="status">
-        <option value="Belum Dihubungi">Belum Dihubungi</option>
-        <option value="Follow-up">Follow-up</option>
-        <option value="Selesai">Selesai</option>
-      </select>
+.sidebar nav a:hover {
+  background: #1d4ed8;
+}
 
-      <input id="schedule" type="date">
-      <textarea id="note" placeholder="Catatan komunikasi"></textarea>
+main {
+  margin-left: 230px;
+  padding: 30px;
+}
 
-      <button type="submit">Simpan Customer</button>
-    </form>
-  </section>
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
 
-  <section class="panel" id="customers">
-    <div class="toolbar">
-      <h2>Database Customer</h2>
-      <input id="search" placeholder="Cari nama atau nomor...">
-    </div>
+header p {
+  color: #64748b;
+  margin-top: 7px;
+}
 
-    <div class="toolbar">
-      <input type="file" id="excelFile" accept=".csv">
-      <button onclick="exportCSV()">Export CSV</button>
-    </div>
+.admin {
+  background: #dbeafe;
+  color: #1d4ed8;
+  padding: 10px 18px;
+  border-radius: 20px;
+}
 
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Nama</th>
-            <th>WhatsApp</th>
-            <th>Status</th>
-            <th>Follow-up</th>
-            <th>Aksi</th>
-          </tr>
-        </thead>
-        <tbody id="customerList"></tbody>
-      </table>
-    </div>
-  </section>
-</main>
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 25px;
+}
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="app.js"></script>
-</body>
-</html>
+.stat, .panel {
+  background: white;
+  padding: 22px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #00000008;
+}
+
+.stat p {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.stat h2 {
+  font-size: 30px;
+  margin-top: 12px;
+  color: #1d4ed8;
+}
+
+.panel {
+  margin-bottom: 25px;
+}
+
+.panel h2 {
+  margin-bottom: 20px;
+}
+
+form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  font-size: 14px;
+}
+
+textarea {
+  grid-column: span 2;
+  min-height: 75px;
+}
+
+button {
+  border: none;
+  padding: 12px 18px;
+  background: #2563eb;
+  color: white;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+form button {
+  grid-column: span 2;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.toolbar input {
+  max-width: 260px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 650px;
+}
+
+th, td {
+  padding: 14px;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: left;
+  font-size: 13px;
+}
+
+th {
+  background: #f8fafc;
+}
+
+.action {
+  display: flex;
+  gap: 5px;
+}
+
+.action button {
+  padding: 8px;
+  font-size: 12px;
+}
+
+.delete {
+  background: #dc2626;
+}
+
+.whatsapp {
+  background: #16a34a;
+}
+
+@media(max-width: 800px) {
+  .sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+  }
+
+  .sidebar nav {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  main {
+    margin-left: 0;
+    padding: 15px;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media(max-width: 480px) {
+  form {
+    grid-template-columns: 1fr;
+  }
+
+  textarea, form button {
+    grid-column: span 1;
+  }
+
+  .toolbar {
+    flex-wrap: wrap;
+  }
+}
