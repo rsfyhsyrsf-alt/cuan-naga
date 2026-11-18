@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Database Admin</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="sidebar">
+  <h2>CRM ADMIN</h2>
+  <p>Customer Management</p>
+  <nav>
+    <a href="#dashboard">Dashboard</a>
+    <a href="#customers">Data Customer</a>
+    <a href="#input">Tambah Customer</a>
+  </nav>
+</div>
+
+<main>
+  <header>
+    <div>
+      <h1>Dashboard Customer</h1>
+      <p>Kelola database customer Anda</p>
+    </div>
+    <span class="admin">ADMIN</span>
+  </header>
+
+  <section class="stats" id="dashboard">
+    <div class="stat">
+      <p>Total Customer</p>
+      <h2 id="total">0</h2>
+    </div>
+    <div class="stat">
+      <p>Belum Dihubungi</p>
+      <h2 id="pending">0</h2>
+    </div>
+    <div class="stat">
+      <p>Follow Up</p>
+      <h2 id="followup">0</h2>
+    </div>
+    <div class="stat">
+      <p>Selesai</p>
+      <h2 id="done">0</h2>
+    </div>
+  </section>
+
+  <section class="panel" id="input">
+    <h2>Tambah Customer</h2>
+
+    <form id="customerForm">
+      <input id="name" placeholder="Nama Customer" required>
+      <input id="phone" placeholder="Nomor WhatsApp" required>
+      <input id="address" placeholder="Alamat Customer">
+
+      <select id="status">
+        <option value="Belum Dihubungi">Belum Dihubungi</option>
+        <option value="Follow-up">Follow-up</option>
+        <option value="Selesai">Selesai</option>
+      </select>
+
+      <input id="schedule" type="date">
+      <textarea id="note" placeholder="Catatan komunikasi"></textarea>
+
+      <button type="submit">Simpan Customer</button>
+    </form>
+  </section>
+
+  <section class="panel" id="customers">
+    <div class="toolbar">
+      <h2>Database Customer</h2>
+      <input id="search" placeholder="Cari nama atau nomor...">
+    </div>
+
+    <div class="toolbar">
+      <input type="file" id="excelFile" accept=".csv">
+      <button onclick="exportCSV()">Export CSV</button>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Nama</th>
+            <th>WhatsApp</th>
+            <th>Status</th>
+            <th>Follow-up</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="customerList"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="app.js"></script>
+</body>
+</html>
